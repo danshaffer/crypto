@@ -1,7 +1,7 @@
 Masatano Crypto Challenges
 ======
 
-These are my solutions to the [Masatano Crypto Challenges](http://cryptopals.com/). I'm trying it out in golang, which I'm really starting to like. It's got a lot of the nice things from Python like 
+These are my solutions to the [Masatano Crypto Challenges](http://cryptopals.com/). I'm trying it out in golang, which I'm really starting to like. It's got a lot of the nice things from Python like: 
 
 ```
 for idx, elem := range arr {
