@@ -2,6 +2,7 @@
 package main
 
 import (
+	"crypto/aes"
 	"encoding/base64"
 	"encoding/hex"
 	"io/ioutil"
@@ -152,6 +153,26 @@ func BreakRepeatingXOR(filename string) (key string, result string) {
 	key_str := string([]byte(full_key))
 	results_b, _ := hex.DecodeString(RepeatingKeyXOR(string(barr), key_str))
 	return key_str, string(results_b)
+}
+
+func DecryptAes(filename string, key string) string {
+	dat, err := ioutil.ReadFile(filename)
+	check(err)
+	lines := strings.Split(string(dat), "\n")
+	plaintext := strings.Join(lines, "")
+	barr, berr := base64.StdEncoding.DecodeString(plaintext)
+	check(berr)
+	ciphertext := make([]byte, len(barr))
+	result := ciphertext
+
+	for len(barr) > 0 {
+		cipher, cerr := aes.NewCipher([]byte(key))
+		check(cerr)
+		cipher.Decrypt(ciphertext, barr)
+		barr = barr[16:]
+		ciphertext = ciphertext[16:]
+	}
+	return string(result)
 }
 
 func main() {

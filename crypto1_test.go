@@ -85,3 +85,11 @@ func TestBreakRepeatingXOR(t *testing.T) {
 		t.Errorf("BreakRepeatingXOR() key was '%s', wanted '%s'", key, wanted)
 	}
 }
+
+func TestDecryptAes(t *testing.T) {
+	wanted := "I'm back and"
+	actual := DecryptAes("/home/dan/Documents/Programming/Crypto/set1ch7.txt", "YELLOW SUBMARINE")
+	if wanted != actual[:len(wanted)] {
+		t.Error("DecryptAes result was incorrect")
+	}
+}
