@@ -175,6 +175,22 @@ func DecryptAes(filename string, key string) string {
 	return string(result)
 }
 
+func IsAes(input_hex string) int {
+	byte_arr, _ := hex.DecodeString(input_hex)
+	freq_map := make(map[string]int)
+	for len(byte_arr) > 0 {
+		freq_map[string(byte_arr[:16])]++
+		byte_arr = byte_arr[16:]
+	}
+	num_dupes := 0
+	for _, v := range freq_map {
+		if v > 1 {
+			num_dupes++
+		}
+	}
+	return num_dupes
+}
+
 func main() {
 
 }

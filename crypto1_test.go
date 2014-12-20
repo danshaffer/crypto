@@ -1,7 +1,11 @@
 // crypto1_test.go
 package main
 
-import "testing"
+import (
+	"io/ioutil"
+	"strings"
+	"testing"
+)
 
 func TestHexToBase64(t *testing.T) {
 	want := "SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t"
@@ -91,5 +95,16 @@ func TestDecryptAes(t *testing.T) {
 	actual := DecryptAes("/home/dan/Documents/Programming/Crypto/set1ch7.txt", "YELLOW SUBMARINE")
 	if wanted != actual[:len(wanted)] {
 		t.Error("DecryptAes result was incorrect")
+	}
+}
+
+func TestFindAes(t *testing.T) {
+	dat, err := ioutil.ReadFile("/home/dan/Documents/Programming/Crypto/set1ch8.txt")
+	check(err)
+	lines := strings.Split(string(dat), "\n")
+	for idx, line := range lines {
+		if num_dupes := IsAes(line); num_dupes > 0 && idx != 132 {
+			t.Errorf("Found %d dupes in line %d", num_dupes, idx)
+		}
 	}
 }
